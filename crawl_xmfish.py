@@ -2,7 +2,8 @@ import time
 import requests
 from pyquery import PyQuery as pQ
 
-url_start = 'http://fangzi.xmfish.com/web/search_hire.html?&page='
+url_start = 'http://fangzi.xmfish.com/web/search_hire.html?h=&hf=&ca=5920'
+url_end = '&r=&s=&a=&rm=&f=&d=&tp=&l=0&tg=&hw=&o=&ot=0&tst=0&page='
 xm_fish_head = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
 }
@@ -12,8 +13,34 @@ filename = local_time + 'xm_fish.csv'
 
 def generate_url():
     urls = []
-    for i in range(1, 135):
-        urls.append(url_start + str(i))
+
+    # 思明可访问页数134
+    for i in range(134):
+        urls.append(url_start + "1" + url_end + str(i+1))
+
+    # 湖里可访问页数134
+    for i in range(134):
+        urls.append(url_start + "2" + url_end + str(i+1))
+
+    # 集美可访问页数38
+    for i in range(38):
+        urls.append(url_start + "3" + url_end + str(i+1))
+
+    # 海沧可访问页数34
+    for i in range(34):
+        urls.append(url_start + "4" + url_end + str(i+1))
+
+    # 翔安可访问页数16
+    for i in range(16):
+        urls.append(url_start + "5" + url_end + str(i+1))
+
+    # 同安可访问页数8
+    for i in range(8):
+        urls.append(url_start + "6" + url_end + str(i+1))
+
+    # 杏林可访问页数15
+    for i in range(15):
+        urls.append(url_start + "8" + url_end + str(i+1))
 
     return urls
 
@@ -89,14 +116,10 @@ def parse_href(current_url):
 
 
 def main():
-    # with open(filename, 'w', encoding='UTF-8') as f:
-    #     f.write('房源名称,租赁种类,房源类型,房源户型,房源面积,房源楼层,房源朝向,'
-    #             '装修等级,房源地址,行政区划,房源租金,所在小区,房源描述,更新时间\n')
     urls = generate_url()
     if urls:
         for url in urls:
             parse_href(url)
-            print("Finished:" + url)
 
 
 if __name__ == '__main__':
